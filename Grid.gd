@@ -41,3 +41,8 @@ func set_tile(pos: Vector2, rune):
 func get_grid_cell(pos: Vector2):
 	if check_bounds(pos):
 		return grid[pos.x][pos.y]
+
+func get_start_position():
+	for child in get_children():
+		if child.type == 'start':
+			return child.grid_position

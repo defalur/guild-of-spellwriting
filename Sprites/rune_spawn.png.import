@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/icon.png-487276ed1e3a0c39cad0279d744ee560.stex"
+path="res://.import/rune_spawn.png-6e11a441e2f0af5873739164199eee2d.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://icon.png"
-dest_files=[ "res://.import/icon.png-487276ed1e3a0c39cad0279d744ee560.stex" ]
+source_file="res://Sprites/rune_spawn.png"
+dest_files=[ "res://.import/rune_spawn.png-6e11a441e2f0af5873739164199eee2d.stex" ]
 
 [params]
 

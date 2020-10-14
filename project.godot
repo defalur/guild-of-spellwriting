@@ -16,8 +16,8 @@ _global_script_class_icons={
 [application]
 
 config/name="Guild of Spellwriting"
-run/main_scene="res://Grid.tscn"
-config/icon="res://icon.png"
+run/main_scene="res://Main.tscn"
+config/icon="res://Sprites/icon.png"
 
 [rendering]
 

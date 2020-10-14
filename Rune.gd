@@ -13,6 +13,8 @@ var grid_position = Vector2()
 export(int, FLAGS, "up", "right", "down", "left") var inputs = 0
 export(int, FLAGS, "up", "right", "down", "left") var outputs = 0
 
+export var type: String
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	print(grid_path)
@@ -38,6 +40,11 @@ func _input_event(viewport, event, shape_idx):
 			grid_position = grid.get_grid_position(position)
 			grabbed = false
 			grid.set_tile(grid_position, self)
+		else:
+			var grid_pos = grid.get_grid_position(position)
+			if not grid.check_bounds(grid_pos):
+				print("Free")
+				queue_free()
 
 func _process(delta):
 	if Input.is_mouse_button_pressed(BUTTON_LEFT) and can_grab or grabbed:
