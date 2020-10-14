@@ -16,13 +16,17 @@ var board
 var grid_pos
 var board_pos
 
+var spell_container
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	board.request_position()
+	spell_container = get_parent()
 
 func clone():
-	pass
+	spell_container.clone_spell(self, grid_pos)
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+func play_turn():
+	#get the rune
+	#test what the rune does
+	#execute instructions
+	pass

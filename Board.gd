@@ -10,6 +10,7 @@ var next_entity_id = 0
 
 export(NodePath) var grid_path
 var grid
+export(Vector2) var start_position
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

@@ -31,6 +31,18 @@ func clone_spell(spell, grid_pos):
 	new_spell.grid_pos = grid_pos
 	add_child(new_spell)
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+func create_spell():
+	var grid_pos = grid.get_start_position()
+	var new_spell = spell_prefab.instance()
+	new_spell.board = board
+	new_spell.grid = grid
+	new_spell.grid_pos = grid_pos
+	new_spell.board_pos = board.start_position
+	new_spell.position = board.map_to_world(new_spell.board_pos)
+	new_spell.id = next_id
+	next_id += 1
+	add_child(new_spell)
+
+func play_turn():
+	for spell in get_children():
+		spell.play_turn()

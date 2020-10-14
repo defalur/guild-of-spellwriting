@@ -40,7 +40,7 @@ func _input_event(viewport, event, shape_idx):
 			grid_position = grid.get_grid_position(position)
 			grabbed = false
 			grid.set_tile(grid_position, self)
-		else:
+		elif not can_grab:
 			var grid_pos = grid.get_grid_position(position)
 			if not grid.check_bounds(grid_pos):
 				print("Free")

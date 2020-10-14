@@ -4,15 +4,19 @@ extends Node2D
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
-
-export(NodePath) var board_path
 var board
+var grid
+var spell_container
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass
+	grid = get_node("Grid")
+	board = get_node("Board")
+	spell_container = get_node("SpellContainer")
 
+func start_spell():
+	spell_container.create_spell()
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+func _input(event):
+	if event.is_action_pressed("ui_right"):
+		spell_container.play_turn()

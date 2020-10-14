@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Grid.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/icon.png" type="Texture" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://Board.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Main.gd" type="Script" id=6]
 [ext_resource path="res://runes/StartRune.tscn" type="PackedScene" id=7]
+[ext_resource path="res://SpellContainer.tscn" type="PackedScene" id=8]
 
 [sub_resource type="TileSet" id=1]
 0/name = "icon.png 0"
@@ -42,7 +43,6 @@
 
 [node name="main" type="Node2D"]
 script = ExtResource( 6 )
-board_path = NodePath("Board")
 
 [node name="Grid" type="TileMap" parent="."]
 tile_set = SubResource( 1 )
@@ -62,3 +62,21 @@ position = Vector2( 640, 0 )
 tile_set = SubResource( 2 )
 tile_data = PoolIntArray( 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, 0, 0, 65536, 0, 0, 65537, 0, 0, 65538, 0, 0, 65539, 0, 0, 65540, 0, 0, 65541, 0, 0, 131072, 0, 0, 131073, 0, 0, 131074, 0, 0, 131075, 0, 0, 131076, 0, 0, 131077, 0, 0, 196608, 0, 0, 196609, 0, 0, 196610, 0, 0, 196611, 0, 0, 196612, 0, 0, 196613, 0, 0, 262144, 0, 0, 262145, 0, 0, 262146, 0, 0, 262147, 0, 0, 262148, 0, 0, 262149, 0, 0, 327680, 0, 0, 327681, 0, 0, 327682, 0, 0, 327683, 0, 0, 327684, 0, 0, 327685, 0, 0, 393216, 0, 0, 393217, 0, 0, 393218, 0, 0, 393219, 0, 0, 393220, 0, 0, 393221, 0, 0, 458752, 0, 0, 458753, 0, 0, 458754, 0, 0, 458755, 0, 0, 458756, 0, 0, 458757, 0, 0 )
 grid_path = NodePath("../Grid")
+
+[node name="SpellContainer" parent="." instance=ExtResource( 8 )]
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+margin_left = 476.0
+margin_top = 547.0
+margin_right = 589.0
+margin_bottom = 598.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="PanelContainer"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 106.0
+margin_bottom = 44.0
+text = "Start"
