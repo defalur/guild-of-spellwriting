@@ -82,3 +82,6 @@ func damage_entity(position, dmg):
 func update_display():
 	for node in get_children():
 		node.update_display()
+
+func get_world_position(pos):
+	return map_to_world(pos) + position + cell_size / 2

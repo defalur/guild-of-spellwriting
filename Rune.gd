@@ -1,5 +1,5 @@
 extends KinematicBody2D
-
+class_name Rune
 
 # Declare member variables here. Examples:
 # var a = 2
@@ -17,6 +17,8 @@ export var type: String
 
 # action parameters
 export(bool) var passthrough = true # wether the spell should immediately jump to the next rune
+export(bool) var set_direction = false
+export(int, FLAGS, "up", "right", "down", "left") var direction_value = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -60,14 +62,31 @@ func test_flag(flags: int, direction: int):
 func get_opposite_direction(direction):
 	return (direction + 2) % 4
 
-func get_outputs():
+func get_direction_vectors_from_flag(flag):
 	var result = []
-	if test_flag(outputs, Direction.UP):
-		result.append(Vector2(0, -1) + grid_position)
-	if test_flag(outputs, Direction.RIGHT):
-		result.append(Vector2(1, 0) + grid_position)
-	if test_flag(outputs, Direction.DOWN):
-		result.append(Vector2(0, 1) + grid_position)
-	if test_flag(outputs, Direction.LEFT):
-		result.append(Vector2(-1, 0) + grid_position)
+	if test_flag(flag, Direction.UP):
+		result.append(Vector2(0, -1))
+	if test_flag(flag, Direction.RIGHT):
+		result.append(Vector2(1, 0))
+	if test_flag(flag, Direction.DOWN):
+		result.append(Vector2(0, 1))
+	if test_flag(flag, Direction.LEFT):
+		result.append(Vector2(-1, 0))
+	return result
+
+func get_outputs():
+	var result = get_direction_vectors_from_flag(outputs)
+	for i in range(len(result)):
+		result[i] += grid_position
+	return result
+
+func get_actions():
+	var result = []
+	if set_direction:
+		var direction_list = get_direction_vectors_from_flag(direction_value)
+		var result_direction = Vector2()
+		for d in direction_list:
+			result_direction += d
+		result.append("direction")
+		result.append(result_direction)
 	return result

@@ -38,15 +38,21 @@ func create_spell():
 	new_spell.grid = grid
 	new_spell.grid_pos = grid_pos
 	new_spell.board_pos = board.start_position
-	new_spell.position = board.map_to_world(new_spell.board_pos)
+	new_spell.position = board.get_world_position(new_spell.board_pos)
 	new_spell.id = next_id
 	next_id += 1
 	add_child(new_spell)
 
 func launch_spell():
 	create_spell()
-	for i in range(10):
+	for i in range(5):#FIXME
 		play_turn()
+		yield(get_tree().create_timer(0.5), "timeout")
+	kill_spells()
+
+func kill_spells():
+	for spell in get_children():
+		spell.queue_free()
 
 func play_turn():
 	for spell in get_children():

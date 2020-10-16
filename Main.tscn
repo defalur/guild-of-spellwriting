@@ -1,7 +1,7 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Grid.gd" type="Script" id=1]
-[ext_resource path="res://Sprites/icon.png" type="Texture" id=2]
+[ext_resource path="res://Sprites/grid_background.png" type="Texture" id=2]
 [ext_resource path="res://Sprites/rune_spawn.png" type="Texture" id=3]
 [ext_resource path="res://Spawner.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Board.tscn" type="PackedScene" id=5]
@@ -9,9 +9,14 @@
 [ext_resource path="res://runes/StartRune.tscn" type="PackedScene" id=7]
 [ext_resource path="res://SpellContainer.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Spell.tscn" type="PackedScene" id=9]
+[ext_resource path="res://runes/EndRune.tscn" type="PackedScene" id=10]
+[ext_resource path="res://runes/RightRune.tscn" type="PackedScene" id=11]
+[ext_resource path="res://runes/LeftRune.tscn" type="PackedScene" id=12]
+[ext_resource path="res://runes/UpRune.tscn" type="PackedScene" id=13]
+[ext_resource path="res://runes/DownRune.tscn" type="PackedScene" id=14]
 
 [sub_resource type="TileSet" id=1]
-0/name = "icon.png 0"
+0/name = "grid_background.png 0"
 0/texture = ExtResource( 2 )
 0/tex_offset = Vector2( 0, 0 )
 0/modulate = Color( 1, 1, 1, 1 )
@@ -51,18 +56,39 @@ format = 1
 script = ExtResource( 1 )
 grid_size = Vector2( 5, 5 )
 
-[node name="Spawner" parent="." instance=ExtResource( 4 )]
+[node name="Spawner_rune" parent="." instance=ExtResource( 4 )]
 position = Vector2( 64, 512 )
 
-[node name="Spawner2" parent="." instance=ExtResource( 4 )]
+[node name="Spawner_start" parent="." instance=ExtResource( 4 )]
 position = Vector2( 128, 512 )
 rune_prefab = ExtResource( 7 )
+
+[node name="Spawner_end" parent="." instance=ExtResource( 4 )]
+position = Vector2( 192, 512 )
+rune_prefab = ExtResource( 10 )
+
+[node name="Spawner_right" parent="." instance=ExtResource( 4 )]
+position = Vector2( 256, 512 )
+rune_prefab = ExtResource( 11 )
+
+[node name="Spawner_left" parent="." instance=ExtResource( 4 )]
+position = Vector2( 320, 512 )
+rune_prefab = ExtResource( 12 )
+
+[node name="Spawner_up" parent="." instance=ExtResource( 4 )]
+position = Vector2( 384, 512 )
+rune_prefab = ExtResource( 13 )
+
+[node name="Spawner_down" parent="." instance=ExtResource( 4 )]
+position = Vector2( 448, 512 )
+rune_prefab = ExtResource( 14 )
 
 [node name="Board" parent="." instance=ExtResource( 5 )]
 position = Vector2( 640, 0 )
 tile_set = SubResource( 2 )
 tile_data = PoolIntArray( 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, 0, 0, 65536, 0, 0, 65537, 0, 0, 65538, 0, 0, 65539, 0, 0, 65540, 0, 0, 65541, 0, 0, 131072, 0, 0, 131073, 0, 0, 131074, 0, 0, 131075, 0, 0, 131076, 0, 0, 131077, 0, 0, 196608, 0, 0, 196609, 0, 0, 196610, 0, 0, 196611, 0, 0, 196612, 0, 0, 196613, 0, 0, 262144, 0, 0, 262145, 0, 0, 262146, 0, 0, 262147, 0, 0, 262148, 0, 0, 262149, 0, 0, 327680, 0, 0, 327681, 0, 0, 327682, 0, 0, 327683, 0, 0, 327684, 0, 0, 327685, 0, 0, 393216, 0, 0, 393217, 0, 0, 393218, 0, 0, 393219, 0, 0, 393220, 0, 0, 393221, 0, 0, 458752, 0, 0, 458753, 0, 0, 458754, 0, 0, 458755, 0, 0, 458756, 0, 0, 458757, 0, 0 )
 grid_path = NodePath("../Grid")
+start_position = Vector2( 2, 2 )
 
 [node name="SpellContainer" parent="." instance=ExtResource( 8 )]
 spell_prefab = ExtResource( 9 )
