@@ -1,5 +1,5 @@
 extends Sprite
-
+class_name Spell
 
 # Declare member variables here. Examples:
 # var a = 2
@@ -22,11 +22,31 @@ var spell_container
 func _ready():
 	spell_container = get_parent()
 
-func clone():
-	spell_container.clone_spell(self, grid_pos)
+func clone(clone_position: Vector2):
+	spell_container.clone_spell(self, clone_position)
 
 func play_turn():
-	#get the rune
-	#test what the rune does
-	#execute instructions
-	pass
+	var run = true
+	while run:
+		#get the rune
+		var current_rune = grid.get_grid_cell(grid_pos)
+		if current_rune == null:
+			break
+		#test what the rune does
+		
+		#execute instructions
+		print("Execute ", grid_pos)
+		if current_rune.passthrough:
+			#get next grid position
+			var outputs = current_rune.get_outputs()
+			var i = 1
+			while i < len(outputs):
+				clone(outputs[i])
+				i += 1
+			grid_pos = outputs[0]
+		else:
+			run = false
+	print("Stop")
+
+func get_board_pos():
+	return board_pos

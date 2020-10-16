@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Grid.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/icon.png" type="Texture" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://Main.gd" type="Script" id=6]
 [ext_resource path="res://runes/StartRune.tscn" type="PackedScene" id=7]
 [ext_resource path="res://SpellContainer.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Spell.tscn" type="PackedScene" id=9]
 
 [sub_resource type="TileSet" id=1]
 0/name = "icon.png 0"
@@ -64,6 +65,9 @@ tile_data = PoolIntArray( 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, 0, 0, 
 grid_path = NodePath("../Grid")
 
 [node name="SpellContainer" parent="." instance=ExtResource( 8 )]
+spell_prefab = ExtResource( 9 )
+board_path = NodePath("../Board")
+grid_path = NodePath("../Grid")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 margin_left = 476.0
@@ -80,3 +84,4 @@ margin_top = 7.0
 margin_right = 106.0
 margin_bottom = 44.0
 text = "Start"
+[connection signal="pressed" from="PanelContainer/Button" to="SpellContainer" method="launch_spell"]

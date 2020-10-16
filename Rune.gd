@@ -15,6 +15,9 @@ export(int, FLAGS, "up", "right", "down", "left") var outputs = 0
 
 export var type: String
 
+# action parameters
+export(bool) var passthrough = true # wether the spell should immediately jump to the next rune
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	print(grid_path)
@@ -50,9 +53,21 @@ func _process(delta):
 	if Input.is_mouse_button_pressed(BUTTON_LEFT) and can_grab or grabbed:
 		position = get_global_mouse_position() + grabbed_offset
 
-func test_flag(flags: int, direction):
+func test_flag(flags: int, direction: int):
 	var mask = 1 << direction
 	return mask & flags != 0
 
 func get_opposite_direction(direction):
 	return (direction + 2) % 4
+
+func get_outputs():
+	var result = []
+	if test_flag(outputs, Direction.UP):
+		result.append(Vector2(0, -1) + grid_position)
+	if test_flag(outputs, Direction.RIGHT):
+		result.append(Vector2(1, 0) + grid_position)
+	if test_flag(outputs, Direction.DOWN):
+		result.append(Vector2(0, 1) + grid_position)
+	if test_flag(outputs, Direction.LEFT):
+		result.append(Vector2(-1, 0) + grid_position)
+	return result

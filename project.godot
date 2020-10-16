@@ -8,9 +8,14 @@
 
 config_version=4
 
-_global_script_classes=[  ]
+_global_script_classes=[ {
+"base": "Sprite",
+"class": "Spell",
+"language": "GDScript",
+"path": "res://Spell.gd"
+} ]
 _global_script_class_icons={
-
+"Spell": ""
 }
 
 [application]

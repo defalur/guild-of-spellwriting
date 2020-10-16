@@ -25,7 +25,7 @@ func clone_spell(spell, grid_pos):
 	new_spell.board = board
 	new_spell.grid = grid
 	new_spell.position = spell.position
-	new_spell.board_pos = spell.board_position
+	new_spell.board_pos = (spell as Spell).get_board_pos()
 	new_spell.id = next_id
 	next_id += 1
 	new_spell.grid_pos = grid_pos
@@ -42,6 +42,11 @@ func create_spell():
 	new_spell.id = next_id
 	next_id += 1
 	add_child(new_spell)
+
+func launch_spell():
+	create_spell()
+	for i in range(10):
+		play_turn()
 
 func play_turn():
 	for spell in get_children():
