@@ -29,27 +29,39 @@ func _ready():
 		grabbed = true
 
 func get_texture():
-	return get_child(1).texture
+	return get_node("RuneSprite").texture
 
 var can_grab = false
 var grabbed_offset = Vector2()
 
 func _input_event(viewport, event, shape_idx):
 	if event is InputEventMouseButton:
-		can_grab = event.pressed
-		grabbed_offset = position - get_global_mouse_position()
-		if not can_grab and grid.is_cell_empty(position + grabbed_offset):
-			position = grid.get_snap(position + grabbed_offset)
-			if not grabbed:
-				grid.set_tile(grid_position, null)
-			grid_position = grid.get_grid_position(position)
-			grabbed = false
-			grid.set_tile(grid_position, self)
-		elif not can_grab:
-			var grid_pos = grid.get_grid_position(position)
-			if not grid.check_bounds(grid_pos):
-				print("Free")
-				queue_free()
+		if event.button_index == BUTTON_LEFT:
+			can_grab = event.pressed
+			grabbed_offset = position - get_global_mouse_position()
+			if not can_grab and grid.is_cell_empty(position + grabbed_offset):
+				position = grid.get_snap(position + grabbed_offset)
+				if not grabbed:
+					grid.set_tile(grid_position, null)
+				grid_position = grid.get_grid_position(position)
+				grabbed = false
+				grid.set_tile(grid_position, self)
+			elif not can_grab:
+				var grid_pos = grid.get_grid_position(position)
+				if not grid.check_bounds(grid_pos):
+					print("Free")
+					queue_free()
+		if event.pressed:
+			print(can_grab)
+			if event.button_index == BUTTON_WHEEL_DOWN:
+				rotate(-1)
+			elif event.button_index == BUTTON_WHEEL_UP:
+				rotate(1)
+			elif event.button_index == BUTTON_RIGHT and (can_grab or grabbed):
+				rotate(1)
+			elif event.button_index == BUTTON_RIGHT:
+				rotate_effects(1)
+				pass
 
 func _process(delta):
 	if Input.is_mouse_button_pressed(BUTTON_LEFT) and can_grab or grabbed:
@@ -78,6 +90,7 @@ func get_outputs():
 	var result = get_direction_vectors_from_flag(outputs)
 	for i in range(len(result)):
 		result[i] += grid_position
+	print("Out: ", result)
 	return result
 
 func get_actions():
@@ -90,3 +103,24 @@ func get_actions():
 		result.append("direction")
 		result.append(result_direction)
 	return result
+
+func rotate_flags(flags, delta):
+	if delta > 0:
+		flags = ((flags << delta) | (flags >> 4 - delta)) & 15
+	elif delta < 0:
+		delta = abs(delta)
+		flags = ((flags >> delta) | (flags << 4 - delta)) & 15
+	return flags
+
+func rotate(delta):
+	print(get_direction_vectors_from_flag(direction_value))
+	inputs = rotate_flags(inputs, delta)
+	outputs = rotate_flags(outputs, delta)
+	print(get_direction_vectors_from_flag(direction_value))
+	get_node("BackSprite").rotate((PI / 2) * delta)
+
+func rotate_effects(delta):
+	print(get_direction_vectors_from_flag(direction_value))
+	direction_value = rotate_flags(direction_value, delta)
+	print(get_direction_vectors_from_flag(direction_value))
+	get_node("RuneSprite").rotate((PI / 2) * delta)
