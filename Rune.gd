@@ -19,6 +19,8 @@ export var type: String
 export(bool) var passthrough = true # wether the spell should immediately jump to the next rune
 export(bool) var set_direction = false
 export(int, FLAGS, "up", "right", "down", "left") var direction_value = 0
+export(bool) var condition = false
+export(String) var trigger
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -93,6 +95,13 @@ func get_outputs():
 	print("Out: ", result)
 	return result
 
+func get_inputs():
+	var result = get_direction_vectors_from_flag(inputs)
+	for i in range(len(result)):
+		result[i] += grid_position
+	print("In: ", result)
+	return result
+
 func get_actions():
 	var result = []
 	if set_direction:
@@ -101,7 +110,10 @@ func get_actions():
 		for d in direction_list:
 			result_direction += d
 		result.append("direction")
-		result.append(result_direction)
+		result.append(result_direction.normalized())
+	if condition:
+		result.append("condition")
+		result.append(trigger)
 	return result
 
 func rotate_flags(flags, delta):
@@ -113,14 +125,10 @@ func rotate_flags(flags, delta):
 	return flags
 
 func rotate(delta):
-	print(get_direction_vectors_from_flag(direction_value))
 	inputs = rotate_flags(inputs, delta)
 	outputs = rotate_flags(outputs, delta)
-	print(get_direction_vectors_from_flag(direction_value))
 	get_node("BackSprite").rotate((PI / 2) * delta)
 
 func rotate_effects(delta):
-	print(get_direction_vectors_from_flag(direction_value))
 	direction_value = rotate_flags(direction_value, delta)
-	print(get_direction_vectors_from_flag(direction_value))
 	get_node("RuneSprite").rotate((PI / 2) * delta)

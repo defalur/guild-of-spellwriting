@@ -46,3 +46,11 @@ func get_start_position():
 	for child in get_children():
 		if child.type == 'start':
 			return child.grid_position
+
+func is_valid_input(input, pos):
+	var cell = get_grid_cell(pos)
+	if cell == null:
+		return false
+	else:
+		var inputs = cell.get_inputs()
+		return (input in inputs)

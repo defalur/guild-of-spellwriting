@@ -5,10 +5,11 @@
 [ext_resource path="res://Sprites/rune_spawn.png" type="Texture" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 32, 32 )
+extents = Vector2( 16, 16 )
 
 [node name="Spawner" type="KinematicBody2D"]
 position = Vector2( 77, 544 )
+scale = Vector2( 2, 2 )
 input_pickable = true
 script = ExtResource( 2 )
 rune_prefab = ExtResource( 1 )

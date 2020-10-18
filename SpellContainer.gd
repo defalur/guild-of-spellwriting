@@ -12,6 +12,7 @@ var board
 
 export(NodePath) var grid_path
 var grid
+var running = false
 
 var next_id = 0
 
@@ -20,7 +21,7 @@ func _ready():
 	grid = get_node(grid_path)
 	board = get_node(board_path)
 
-func clone_spell(spell, grid_pos):
+func clone_spell(spell, grid_pos, direction):
 	var new_spell = spell_prefab.instance()
 	new_spell.board = board
 	new_spell.grid = grid
@@ -29,7 +30,9 @@ func clone_spell(spell, grid_pos):
 	new_spell.id = next_id
 	next_id += 1
 	new_spell.grid_pos = grid_pos
+	new_spell.direction = direction
 	add_child(new_spell)
+	return new_spell
 
 func create_spell():
 	var grid_pos = grid.get_start_position()
@@ -44,11 +47,18 @@ func create_spell():
 	add_child(new_spell)
 
 func launch_spell():
+	if running:
+		return
+	running = true
 	create_spell()
-	for i in range(5):#FIXME
+	var i = 0
+	while len(get_children()) > 0 and i < 120:#FIXME
 		play_turn()
 		yield(get_tree().create_timer(0.5), "timeout")
+		i += 1
+	print("End of spell")
 	kill_spells()
+	running = false
 
 func kill_spells():
 	for spell in get_children():

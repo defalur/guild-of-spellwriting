@@ -5,7 +5,7 @@ extends TileMap
 # var a = 2
 # var b = "text"
 
-enum CELL_TYPES { ACTOR, OBJECT, OBSTACLE }
+enum CELL_TYPES { WALL, FLOOR, SPAWN }
 var next_entity_id = 0
 
 export(NodePath) var grid_path
@@ -15,8 +15,9 @@ export(Vector2) var start_position
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	grid = get_node(grid_path)
-	for child in get_children():
-		set_cellv(world_to_map(child.position), child.type)
+	#for child in get_children():
+	#	set_cellv(world_to_map(child.position), child.type)
+	set_cellv(start_position, CELL_TYPES.SPAWN)
 
 func add_entity(position, id, type):
 	match type:
@@ -61,19 +62,8 @@ func request_move(pawn, cell_target):
 			var pawn_name = get_cell_pawn(cell_target, cell_tile_id).name
 			print("Cell %s contains %s" % [cell_target, pawn_name])
 
-func raymarch_grid(origin : Vector2, direction : Vector2, max_dist = 100):
-	if direction.x != 0 and direction.y != 0:
-		print("Invalid ray direction.")
-		return [] #not managed
-
-	direction = direction / direction.length()
-	var position = origin + direction
-	var result = []
-	while origin.distance_to(position) < max_dist:
-		if get_cellv(position) != -1:
-			result.append(position)
-		position += direction
-	return result
+func get_cell_type(position: Vector2):
+	return get_cellv(position)
 
 func damage_entity(position, dmg):
 	var cell_tile_id = get_cellv(position)

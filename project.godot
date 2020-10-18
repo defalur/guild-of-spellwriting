@@ -30,6 +30,11 @@ config/name="Guild of Spellwriting"
 run/main_scene="res://Main.tscn"
 config/icon="res://Sprites/icon.png"
 
+[display]
+
+window/stretch/mode="viewport"
+window/stretch/aspect="keep"
+
 [rendering]
 
 environment/default_environment="res://default_env.tres"

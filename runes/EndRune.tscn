@@ -4,8 +4,8 @@
 [ext_resource path="res://Rune.gd" type="Script" id=2]
 [ext_resource path="res://Sprites/end.png" type="Texture" id=3]
 
-[sub_resource type="RectangleShape2D" id=11]
-extents = Vector2( 32, 32 )
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 16, 16 )
 
 [node name="Rune" type="KinematicBody2D"]
 input_pickable = true
@@ -15,7 +15,7 @@ inputs = 15
 passthrough = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource( 11 )
+shape = SubResource( 1 )
 
 [node name="BackSprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )
